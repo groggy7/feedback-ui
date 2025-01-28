@@ -1,5 +1,5 @@
 export type Feedback = {
-    id?: number
+    id: number
     rating: number
     text: string
 }
