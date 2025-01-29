@@ -1,3 +1,4 @@
+import FeedbackForm from "./components/FeedbackForm.tsx"
 import FeedbackList from "./components/FeedbackList"
 import FeedbackStats from "./components/FeedbackStats.tsx"
 import Header from "./components/Header"
@@ -13,8 +14,13 @@ function App() {
     setFeedbacks(filteredFeedbacks)
   }
 
-  return <div className="p-4 flex flex-col gap-2">
+  function addReview(feedback: Feedback) {
+    setFeedbacks([feedback, ...feedbacks])
+  } 
+
+  return <div className="p-4 flex flex-col gap-2 max-w-[600px] mx-auto">
     <Header />
+    <FeedbackForm addReview={addReview}/>
     <FeedbackStats feedbacks={feedbacks} />
     <div className="flex flex-col gap-6">
       <FeedbackList feedbacks={feedbacks} handleDelete={handleDelete} />

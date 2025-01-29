@@ -5,15 +5,11 @@ type FeedbackStatsProps = {
 }
 
 export default function FeedbackStats({feedbacks}: FeedbackStatsProps) {
-    if(feedbacks.length === 0) {
-        return null
-    }
-
-    const sum = feedbacks.reduce((acc, curr) =>  acc + curr.rating, 0)
-    const average = (sum / feedbacks.length).toFixed(1)
+    let average = feedbacks.reduce((acc, curr) =>  acc + curr.rating, 0) / feedbacks.length
+    average = Number(average.toFixed(1))
 
     return <div className="flex justify-between py-2 text-white">
         <span>{feedbacks.length} reviews</span>
-        <span>average rating: {average}</span>
+        <span>average rating: {isNaN(average) ? 0 : average}</span>
     </div>
 }
