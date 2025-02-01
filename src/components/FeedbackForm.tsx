@@ -12,13 +12,8 @@ export default function FeedbackForm() {
     function handleAction(formData: FormData) {
         const text = String(formData.get("comment")).trim()
         
-        if (!text) {
-            console.error("Please enter a review text")
-            return
-        }
-        
-        if (feedbackRating === 0) {
-            console.error("Please select a rating")
+        if (!text || feedbackRating === 0) {
+            console.error("Please fill-in the form")
             return
         }
 
@@ -40,7 +35,7 @@ export default function FeedbackForm() {
         <form action={handleAction}
             className="text-white bg-black rounded-lg p-4 flex flex-col gap-2 items-center"
         >
-            <RadioGroup onValueChange={handleChange} />
+            <RadioGroup onValueChange={handleChange} value={feedbackRating} />
             <label htmlFor="comment">Type your review</label>
             <div className="relative w-full">
                 <input 

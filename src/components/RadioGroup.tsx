@@ -1,25 +1,22 @@
-import React from "react"
-
 interface NumberedRadioProps {
   numbers?: number[]
   onValueChange: (value: number) => void
+  value: number
 }
 
 export default function RadioGroup({
   numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
   onValueChange,
+  value
 }: NumberedRadioProps) {
-  const [selectedValue, setSelectedValue] = React.useState<number>(0)
-
   if (!numbers || numbers.length === 0) {
     return <div>No numbers provided</div>
   }
 
-  function handleChange(value: number) {
-    setSelectedValue(value)
-    onValueChange(value)
+  function handleChange(newValue: number) {
+    onValueChange(newValue)
   }
-
+  
   return (
     <div className="flex flex-col gap-4 items-center py-2">
         <h2>How would you rate your service with us</h2>
@@ -31,7 +28,7 @@ export default function RadioGroup({
                 id={`radio-${number}`}
                 name="radio-group"
                 value={number}
-                checked={selectedValue === number}
+                checked={value === number}
                 onChange={(e) => handleChange(Number(e.target.value))}
                 className="sr-only peer"
             ></input>
