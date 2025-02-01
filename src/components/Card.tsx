@@ -10,7 +10,12 @@ type CardProps = {
 
 export default function Card({rating, children, handleDelete, handleEdit} : CardProps) {
     return <div className="bg-white px-6 py-6 rounded-lg relative">
-        <div className="absolute bg-amber-600 w-10 h-10 flex justify-center items-center rounded-full -left-3 -top-3">{rating}</div>
+        <div 
+            className="absolute text-white bg-amber-600 w-8 h-8 text-sm flex
+            justify-center items-center rounded-full -left-3 -top-3"
+        >
+            {rating}
+        </div>
         <button 
             className="absolute top-1 right-8 cursor-pointer text-red-500 hover:text-green-500"
             onClick={handleEdit}

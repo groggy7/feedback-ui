@@ -58,7 +58,7 @@ export default function FeedbackForm() {
                     onChange={(e) => setFeedbackText(e.target.value)}
                 />
                 <button 
-                    className="bg-gray-300 text-black rounded-lg px-2 py-1 cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"
+                    className="bg-gray-300 text-black rounded-lg px-2 py-1 cursor-pointer absolute right-4 bottom-3"
                 >
                     Send
                 </button>
