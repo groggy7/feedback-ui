@@ -2,16 +2,20 @@ import React, { PropsWithChildren } from "react";
 import { Feedback } from "../types";
 
 type FeedbackContextType = {
-    feedbacks: Feedback[] | null | undefined
+    feedbacks: Feedback[] | null
     deleteFeedback: (id: number) => void
     addFeedback: (feedback: Feedback) => void
+    editFeedback: (feedback: Feedback) => void
+    feedbackToBeEdited: Feedback | null
 }
 
 export const FeedbackContext = React.createContext<FeedbackContextType>(
     {
         feedbacks: null,
         deleteFeedback: () => null,
-        addFeedback: () => null
+        addFeedback: () => null,
+        editFeedback: () => null,
+        feedbackToBeEdited: null
     }
 )
 
@@ -34,6 +38,7 @@ export default function FeedbackProvider({ children }: PropsWithChildren) {
           },
     ])
 
+    const [feedbackToBeEdited, setFeedbackToBeEdited] = React.useState<Feedback | null>(null)
 
     function handleDelete(id: number) {
         if (feedbacks) {
@@ -43,10 +48,33 @@ export default function FeedbackProvider({ children }: PropsWithChildren) {
     }
 
     function handleAdd(feedback: Feedback) {
-        setFeedbacks((prevFeedbacks) => [feedback, ...(prevFeedbacks || [])])
-    } 
+        setFeedbacks(prev => {
+            if(!prev) {
+                return [feedback]
+            }
 
-    return <FeedbackContext.Provider value={{feedbacks: feedbacks, deleteFeedback: handleDelete, addFeedback: handleAdd}}>
+            const isEditing = prev.some(f => f.id === feedback.id)
+            return isEditing 
+                ? prev.map(f => f.id === feedback.id ? feedback : f)
+                : [feedback, ...prev]
+        })
+    }
+
+    function handleEdit(feedback: Feedback) {
+        setFeedbackToBeEdited(currentFeedback => 
+            currentFeedback?.id === feedback.id ? null : feedback
+        )
+    }
+
+    return <FeedbackContext.Provider value={
+        {
+            feedbacks: feedbacks,
+            deleteFeedback: handleDelete,
+            addFeedback: handleAdd,
+            editFeedback: handleEdit,
+            feedbackToBeEdited: feedbackToBeEdited
+        }
+    }>
         {children}
     </FeedbackContext.Provider>
 }

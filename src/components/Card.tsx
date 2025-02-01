@@ -1,17 +1,25 @@
 import { X } from "lucide-react"
+import { Pencil } from "lucide-react"
 
 type CardProps = {
     rating: number
     children: React.ReactNode
-    onClick: () => void
+    handleDelete: () => void
+    handleEdit: () => void
 }
 
-export default function Card({rating, children, onClick} : CardProps) {
+export default function Card({rating, children, handleDelete, handleEdit} : CardProps) {
     return <div className="bg-white px-6 py-6 rounded-lg relative">
         <div className="absolute bg-amber-600 w-10 h-10 flex justify-center items-center rounded-full -left-3 -top-3">{rating}</div>
+        <button 
+            className="absolute top-1 right-8 cursor-pointer text-red-500 hover:text-green-500"
+            onClick={handleEdit}
+        >
+            <Pencil size={15} />
+        </button>
         <button
             className="absolute top-1 right-2 cursor-pointer hover:text-red-500"
-            onClick={onClick}
+            onClick={handleDelete}
         >
             <X size={16}></X>
         </button>

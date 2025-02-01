@@ -4,7 +4,7 @@ import { FeedbackContext } from "../context/Feedback"
 export default function FeedbackStats() {
     const {feedbacks} = React.useContext(FeedbackContext)
 
-    if (!feedbacks) {
+    if (!feedbacks || feedbacks.length === 0) {
         return <div className="flex justify-between py-2 text-white">
             <span>0 reviews</span>
             <span>average rating: 0</span>

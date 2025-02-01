@@ -5,9 +5,19 @@ import { FeedbackContext } from "../context/Feedback"
 import React from "react"
 
 export default function FeedbackForm() {
-    const {addFeedback} = React.useContext(FeedbackContext)
-
+    const {addFeedback, feedbackToBeEdited} = React.useContext(FeedbackContext)
     const [feedbackRating, setFeedbackRating] = useState<number>(0)
+    const [feedbackText, setFeedbackText] = React.useState<string>("")
+
+    React.useEffect(() => {
+        if(feedbackToBeEdited) {
+            setFeedbackRating(feedbackToBeEdited.rating)
+            setFeedbackText(feedbackToBeEdited.text)
+        } else {
+            setFeedbackRating(0)
+            setFeedbackText("")
+        }
+    }, [feedbackToBeEdited])
 
     function handleAction(formData: FormData) {
         const text = String(formData.get("comment")).trim()
@@ -18,13 +28,14 @@ export default function FeedbackForm() {
         }
 
         const newFeedback: Feedback = {
-            id: Math.floor(Math.random() * 100000),
+            id: feedbackToBeEdited?.id ?? Math.floor(Math.random() * 100000),
             rating: feedbackRating,
             text: text
         }
 
         addFeedback(newFeedback)
         setFeedbackRating(0)
+        setFeedbackText("")
     }
 
     function handleChange(value: number) {
@@ -38,11 +49,13 @@ export default function FeedbackForm() {
             <RadioGroup onValueChange={handleChange} value={feedbackRating} />
             <label htmlFor="comment">Type your review</label>
             <div className="relative w-full">
-                <input 
+                <textarea
                     id="comment"
                     name="comment"
-                    className="bg-white w-full rounded text-black px-2 py-2 outline-0"
+                    className="bg-white w-full rounded text-black px-2 py-2 outline-0 h-24"
                     placeholder="Write a review"
+                    value={feedbackText}
+                    onChange={(e) => setFeedbackText(e.target.value)}
                 />
                 <button 
                     className="bg-gray-300 text-black rounded-lg px-2 py-1 cursor-pointer absolute right-2 top-1/2 -translate-y-1/2"

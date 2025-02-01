@@ -8,10 +8,14 @@ type FeedbackItemProps = {
 }
 
 export default function FeedbackItem({feedback} : FeedbackItemProps) {
-    const {deleteFeedback} = React.useContext(FeedbackContext)
+    const {deleteFeedback, editFeedback} = React.useContext(FeedbackContext)
 
     return <div>
-        <Card rating={feedback.rating} onClick={() => deleteFeedback(feedback.id)}>
+        <Card 
+            rating={feedback.rating}
+            handleDelete={() => deleteFeedback(feedback.id)}
+            handleEdit={() => editFeedback(feedback)}
+        >
             {feedback.text}
         </Card>
     </div>
