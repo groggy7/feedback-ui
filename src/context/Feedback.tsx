@@ -58,6 +58,7 @@ export default function FeedbackProvider({ children }: PropsWithChildren) {
                 ? prev.map(f => f.id === feedback.id ? feedback : f)
                 : [feedback, ...prev]
         })
+        setFeedbackToBeEdited(null)
     }
 
     function handleEdit(feedback: Feedback) {
