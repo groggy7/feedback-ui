@@ -1,12 +1,12 @@
 import { useState } from "react"
 import { Feedback } from "../types"
 import RadioGroup from "./RadioGroup"
+import { FeedbackContext } from "../context/Feedback"
+import React from "react"
 
-type FeedbackFormProps = {
-    addReview: (feedback: Feedback) => void
-}
+export default function FeedbackForm() {
+    const {addFeedback} = React.useContext(FeedbackContext)
 
-export default function FeedbackForm({addReview}: FeedbackFormProps) {
     const [feedbackRating, setFeedbackRating] = useState<number>(0)
 
     function handleAction(formData: FormData) {
@@ -28,7 +28,7 @@ export default function FeedbackForm({addReview}: FeedbackFormProps) {
             text: text
         }
 
-        addReview(newFeedback)
+        addFeedback(newFeedback)
         setFeedbackRating(0)
     }
 

@@ -1,14 +1,12 @@
 import FeedbackItem from "./FeedbackItem"
-import { Feedback } from "../types"
+import { FeedbackContext } from "../context/Feedback"
 import { AnimatePresence, motion } from "framer-motion"
+import React from "react"
 
-type FeedbackListProps = {
-    feedbacks: Feedback[],
-    handleDelete: (id: number) => void
-}
+export default function FeedbackList() {
+    const {feedbacks} = React.useContext(FeedbackContext)
 
-export default function FeedbackList({feedbacks, handleDelete} : FeedbackListProps) {
-    if(feedbacks.length === 0) {
+    if(!feedbacks) {
         return <div className="bg-white p-2 rounded-lg text-center">no feedback item</div>
     }
 
@@ -16,7 +14,7 @@ export default function FeedbackList({feedbacks, handleDelete} : FeedbackListPro
         {
             feedbacks.map(feedback => (
                 <motion.div key={feedback.id} initial={{opacity: 0}} animate={{opacity: 1}} exit={{opacity: 0}}>
-                    <FeedbackItem key={feedback.id} feedback={feedback} handleDelete={handleDelete} />
+                    <FeedbackItem key={feedback.id} feedback={feedback} />
                 </motion.div>
             ))
         }
